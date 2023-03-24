@@ -13,7 +13,9 @@ const carfaxAuthUri = `https://auth.carfax.com/authorize?client_id=${clientId}&r
 
 const Home = () => {
     const [accidentReport, setAccidentReport] = useState(null);
+    const [carfaxReportUrl, setCarfaxReportUrl] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingFullCarFaxReport, setIsLoadingFullCarFaxReport] = useState(false);
 
     useEffect(() => {
         window.addEventListener('storage', () => {
@@ -21,7 +23,10 @@ const Home = () => {
 
             const fetchData = async () => {
                 const report = await getAccidentReportData(data);
-                setAccidentReport(report)
+                const carfaxReportUrl = await getCarfaxFullReportUrl(data);
+                console.log('carfaxReportUrl=>>', carfaxReportUrl);
+                setAccidentReport(report);
+                setCarfaxReportUrl(carfaxReportUrl);
             }
 
             if (data) {
@@ -34,7 +39,9 @@ const Home = () => {
 
             const fetchData = async () => {
                 const report = await getAccidentReportData(data);
-                setAccidentReport(report)
+                const carfaxReportUrl = await getCarfaxFullReportUrl(data);
+                setAccidentReport(report);
+                setCarfaxReportUrl(carfaxReportUrl);
             }
         if (data) {
             fetchData()
@@ -103,6 +110,31 @@ const Home = () => {
         window.open(authUrl, "_blank")
     }
     
+    const getCarfaxFullReportUrl = async (carfaxData) => {
+        const data = JSON.stringify({
+            query: `{
+                dealerReport(vin: "2T3H1RFV3MW150368") { carfaxLink { url } snapshotKey }
+            }`,
+            variables: {}
+          });
+    
+          var config = {
+            method: 'post',
+            url: endpoint,
+            headers: { 
+              'Authorization': `Bearer ${carfaxData?.access_token}`, 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+        setIsLoadingFullCarFaxReport(true);
+
+        const response = await axios(config);
+
+        setIsLoadingFullCarFaxReport(false);
+        return response.data;
+    }
+
     if (isLoading) {
         return (
             <h1 className="text-center my-2">Loading...</h1>
@@ -133,6 +165,7 @@ const Home = () => {
 
     const { dealerReport: { fourPillars } } = accidentReport?.data || null;
 
+    const { dealerReport: { carfaxLink } } = carfaxReportUrl.data || null;
     return (
         <div className="flex justify-center my-8 mx-8  sm:mx-2  ">
             <div className="">
@@ -167,6 +200,9 @@ const Home = () => {
                         </div>
                         <p className="text-center text-sm sm:text-xs">{fourPillars.serviceRecord.iconText}</p>
                     </div>
+                </div>
+                <div className="text-center mt-6">
+                    <a className="text-center text-green-500 font-bold  text-sm sm:text-xs" rel="noreferrer" href={carfaxLink?.url} target="_blank">View Full Carfax Report</a>
                 </div>
             </div>
         </div>

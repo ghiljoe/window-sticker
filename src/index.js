@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 // import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 // const httpLink = new HttpLink({
 //   uri: 'https://connect.carfax.com/v1/graphql', // Server URL (must be absolute)
