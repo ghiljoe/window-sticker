@@ -16,7 +16,7 @@ function App() {
       <Route path="carfax-auth/callback" element={<CarfaxCallBack />} />
       {/* <Route path="window-sticker" element={<WindowSticker />} /> */}
       <Route path="chrome-extension" element={<ChromeExtension />} />
-      <Route path="valuation" element={<CarketaValuation />} />
+      <Route path="sales-packet" element={<CarketaValuation />} />
     </Routes>
   );
 }
