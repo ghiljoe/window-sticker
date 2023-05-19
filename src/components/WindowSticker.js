@@ -1,5 +1,5 @@
 import React from "react";
-import CurrencyFormat from 'react-currency-format';
+// import CurrencyFormat from 'react-currency-format';
 import carLogo from '../images/acura-logo.png'
 import qrCode from '../images/qrcode.png'
 import barcode from '../images/barcode.png'
@@ -72,7 +72,8 @@ const App = () => {
 
   const formatPrice = (value) => {
     return (
-      <CurrencyFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+      // <CurrencyFormat value={value} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+      <span>${value.toLocaleString()}</span>
     );
   }
 
@@ -397,19 +398,21 @@ const App = () => {
               <p className="text-4xl font-bold text-center">{formatPrice(Math.round(annualFuelCost))}</p>
             </div>
             <div className="flex-auto w-full border-2 items-center border-black rounded px-2 py-2 mt-2">
-              <div className="flex">
-                <div className="mr-2 flex-none pr-2">
-                  <p className="font-bold text-xxs pb-2">Fuel Economy & Greenhouse Gas Rating <span className="font-normal text-xxs">(Tailpipe only)</span></p>
-                  {linearRatingBar()}
+              <div className="  ">
+                <div className="mr-2 flex-none pr-2 pb-2">
+                  <p className="font-bold text-xxs ">Fuel Economy & Greenhouse Gas Rating <span className="font-normal text-xxs">(Tailpipe only)</span></p>
+                  {/* {linearRatingBar()} */}
+                  <p className="text-xxs text-gray">N/a</p>
                 </div>
                 <div className="mr-2 flex-auto">
-                  <p className="font-bold text-xxs pb-2">Smog Rating  <span className="font-normal text-xxs">(Tailpipe only)</span></p>
-                  {linearRatingBar()}
+                  <p className="font-bold text-xxs">Smog Rating  <span className="font-normal text-xxs">(Tailpipe only)</span></p>
+                  {/* {linearRatingBar()} */}
+                  <p className="text-xxs text-gray">N/a</p>
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <p className="font-medium" style={{ fontSize: '9px'}}>This vehicle emits 278 grams CO, per mile. The best emits 0 grams per mile (tailpipe only). Producing and distributing fuel also create emissions; learn more at fueleconomy.gov</p>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex bg-stone-800 rounded py-4 px-4 mt-2">

@@ -1,17 +1,17 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import carfaxLogo from '../images/carfax_logo.png'
+import carfaxLogo from '../assets/images/carfax_logo.png'
 
 const endpoint = "https://connect.carfax.com/v1/graphql";
 
 const clientId = '6hdILq7oxHKkVcsnPiitW1doVvLhRxXT';
 
-const redirectUri = 'http://localhost:3001/carfax-auth/callback';
+const redirectUri = 'http://localhost:3000/carfax-auth/callback';
 
 const carfaxAuthUri = `https://auth.carfax.com/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&audience=https://connect.carfax.com&scope=offline_access`;
 
-const Home = () => {
+const Carfax = () => {
     const [accidentReport, setAccidentReport] = useState(null);
     const [carfaxReportUrl, setCarfaxReportUrl] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -31,22 +31,38 @@ const Home = () => {
 
             if (data) {
                 fetchData()
-                .catch(console.error);
+                // make sure to catch any error
+                .catch((error) => {
+                    console.log(console.error);
+                    setAccidentReport(null);
+                    setIsLoading(false);
+                });
+            } else {
+                setAccidentReport(null);
+                setIsLoading(false);
             }
         });
 
         const data = JSON.parse(localStorage.getItem('carfax-auth'));
+        console.log('data=>>', data);
+        const fetchData = async () => {
+            const report = await getAccidentReportData(data);
+            const carfaxReportUrl = await getCarfaxFullReportUrl(data);
+            setAccidentReport(report);
+            setCarfaxReportUrl(carfaxReportUrl);
+        }
 
-            const fetchData = async () => {
-                const report = await getAccidentReportData(data);
-                const carfaxReportUrl = await getCarfaxFullReportUrl(data);
-                setAccidentReport(report);
-                setCarfaxReportUrl(carfaxReportUrl);
-            }
         if (data) {
             fetchData()
             // make sure to catch any error
-            .catch(console.error);
+            .catch((error) => {
+                console.log(console.error);
+                setAccidentReport(null);
+                setIsLoading(false);
+            });
+        } else {
+            setAccidentReport(null);
+            setIsLoading(false);
         }
       }, [])
 
@@ -143,16 +159,16 @@ const Home = () => {
 
     if (!accidentReport) {
         return (
-            <div className="flex justify-center my-8 mx-8  sm:mx-2  ">
+            <div className="flex justify-center  sm:mx-2  ">
                 <div>
                     <div>
                         <img className=" h-8" src={carfaxLogo} alt=""/>
                     </div>
-                    <div className="flex pt-4 justify-between">
-                        <div className="w-64">
+                    <div className="flex pt-4 justify-end items-center">
+                        <div className="w-3/4">
                             <p className="text-sm">CARFAX™ periodically requires users to re-authorize their accounts. Please click the button below to do so.</p>
                         </div>
-                        <div className="ml-20">
+                        <div className="flex justify-end w-1/2 ">
                             <button onClick={onClickCarfaxButton} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Link Carfax
                             </button>
@@ -167,7 +183,7 @@ const Home = () => {
 
     const { dealerReport: { carfaxLink } } = carfaxReportUrl.data || null;
     return (
-        <div className="flex justify-center my-8 mx-8  sm:mx-2  ">
+        <div className="flex justify-center  sm:mx-2  ">
             <div className="">
                 <div>
                     <img className=" h-8" src={carfaxLogo} alt=""/>
@@ -209,4 +225,4 @@ const Home = () => {
     );
 };
   
-export default Home;
+export default Carfax;

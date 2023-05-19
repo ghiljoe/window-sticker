@@ -1,0 +1,60 @@
+
+
+.gray-500 {
+    color:rgba(58, 53, 65, 0.6);
+}
+
+.gray-400 {
+    color: rgba(58, 53, 65, 0.87);
+}
+
+.bg-gray-300 {
+    background-color: rgba(138, 141, 147, 0.3);
+}
+
+.bg-gray-200 {
+    background-color: #F5F5F5;
+}
+
+.bg-gray-900 {
+    background-color: rgba(117, 113, 122, 1);
+}
+
+.text-14 {
+    font-size: 14px;
+}
+
+.text-12 {
+    font-size: 12px;
+}
+
+.text-16 {
+    font-size: 16px;
+}
+
+.selected {
+    color: rgba(86, 202, 0, 1);
+}
+
+.bg-green {
+    background-color:  rgba(86, 202, 0, 1);
+}
+
+.text-green {
+    color: rgba(86, 202, 0, 1);
+}
+
+.border-green {
+    border-color: rgba(86, 202, 0, 1);
+}
+
+.bg-green-80 {
+    background-color:  rgba(216, 247, 193, 0.8);
+}
+
+.accordion-status {
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
