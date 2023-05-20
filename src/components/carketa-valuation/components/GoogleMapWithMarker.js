@@ -14,7 +14,7 @@ function GoogleMap(props) {
   useEffect(() => {
     const loadGoogleMapsAPI = async () => {
       await loadjs(
-        `https://maps.googleapis.com/maps/api/js?key=AIzaSyDjx0QsOIj6kV1G-UkHSzZBtiRwaDQ9TrM`,
+        `https://maps.googleapis.com/maps/api/js?key=API_KEY_HERE`,
         { returnPromise: true }
       );
     };
